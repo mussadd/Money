@@ -325,7 +325,8 @@ function haptic(){ try { $('hap').click(); } catch(e){} }
 /* ============ api, cache, offline queue ============ */
 async function api(action, payload){
   const r = await fetch(API, { method: 'POST', body: JSON.stringify(Object.assign({ token: TOKEN, action }, payload || {})) });
-  const j = await r.json();
+  let j; const txt = await r.text();
+  try { j = JSON.parse(txt); } catch(e) { throw new Error('The sheet had a problem. Nothing was saved. Try again in a minute.'); }
   if (j.auth === false) { setup('This token was not accepted. Check it and try again.'); throw new Error('Not authorised'); }
   if (j.ok === false) throw new Error(j.message || 'Something went wrong');
   return j;
