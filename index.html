@@ -1187,12 +1187,12 @@ function openCategory(name){
   const Pd = D.period, isDaily = c.group === 'daily', canSwitch = c.group === 'daily' || c.group === 'monthly';
   const e = D.txns.filter(x => x.cat === name);
   const over = c.spent > c.budget && c.budget >= 0, left = c.budget - c.spent;
-  openSheet(`${ib(name, 'sm')} ${esc(short(name))}`, isDaily ? `<div class="disp n" style="${over ? 'color:var(--bad)' : ''}">${f0(c.spent)}<small> / ${f0(c.budget)}</small></div>
+  openSheet(`${ib(name, 'sm')} ${esc(short(name))}`, (isDaily ? `<div class="disp n" style="${over ? 'color:var(--bad)' : ''}">${f0(c.spent)}<small> / ${f0(c.budget)}</small></div>
     <div class="cap">${left < 0 ? f0(-left) + ' over this month' : f0(left) + ' left this month · ' + (paceCol(c.spent, c.budget) === 'var(--warn)' ? 'spending faster than planned' : 'on track')}</div>
     <div class="bar" style="margin:10px 30px 0;height:7px"><i style="width:${c.budget > 0 ? Math.min(100, c.spent / c.budget * 100) : (c.spent > 0 ? 100 : 0)}%;background:${paceCol(c.spent, c.budget)}"></i></div>` :
     `<div class="disp n" style="${over ? 'color:var(--bad)' : ''}">${f0(c.spent)}<small> / ${f0(c.budget)}</small></div>
     <div class="cap">${left < 0 ? f0(-left) + ' over this month' : f0(left) + ' left this month'}</div>
-    <div class="bar" style="margin:10px 30px 0;height:7px"><i style="width:${c.budget > 0 ? Math.min(100, c.spent / c.budget * 100) : (c.spent > 0 ? 100 : 0)}%;background:${col(c.spent, c.budget)}"></i></div>
+    <div class="bar" style="margin:10px 30px 0;height:7px"><i style="width:${c.budget > 0 ? Math.min(100, c.spent / c.budget * 100) : (c.spent > 0 ? 100 : 0)}%;background:${col(c.spent, c.budget)}"></i></div>`) + `
     ${canSwitch ? `<div class="sg pick" id="ctype" style="margin:16px 20px 0"><button class="${isDaily ? 'on' : ''}" data-v="daily">Counts in daily</button><button class="${!isDaily ? 'on' : ''}" data-v="monthly">Monthly bar</button></div>` : ''}
     <div class="lbl">This month · ${e.length} ${e.length === 1 ? 'entry' : 'entries'}</div><div class="card">` +
     (e.length ? e.map(x => `<button class="it" onclick="openEntry(${x.row})">${ib(name, 'sm')}<div class="mid"><div class="t">${esc(x.desc || short(name))}</div>
